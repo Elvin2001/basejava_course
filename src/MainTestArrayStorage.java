@@ -1,5 +1,8 @@
+import com.basejava.webapp.model.Resume;
+import com.basejava.webapp.storage.ArrayStorage;
+
 /**
- * Test for your ArrayStorage implementation
+ * Test for your com.basejava.webapp.storage.ArrayStorage implementation
  */
 public class MainTestArrayStorage {
     static final ArrayStorage ARRAY_STORAGE = new ArrayStorage();
@@ -32,7 +35,7 @@ public class MainTestArrayStorage {
 //
 //    static void printAll() {
 //        System.out.println("\nGet All");
-//        for (Resume r : ARRAY_STORAGE.getAll()) {
+//        for (com.basejava.webapp.model.Resume r : ARRAY_STORAGE.getAll()) {
 //            System.out.println(r);
 //        }
     }

@@ -1,3 +1,6 @@
+package com.basejava.webapp.storage;
+
+import com.basejava.webapp.model.Resume;
 
 import java.util.Arrays;
 
@@ -5,21 +8,30 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-
     protected static final int STORAGE_LIMIT = 10000;
     protected final Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size;
-    void clear() {
+
+    public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
-    void save(Resume r) {
+    public void update(Resume r) {
+        if (findIndex(r.getUuid()) == -1) {
+            System.out.println("Такого объекта нет");
+        } else {
+            storage[findIndex(r.getUuid())] = r;
+
+        }
+
+    }
+
+    public void save(Resume r) {
         if (size >= STORAGE_LIMIT) {
             System.out.println("Хранилище переполнено");
         } else {
-            int index = findIndex(r.getUuid());
-            if (index >= 0) {
+            if (findIndex(r.getUuid()) >= 0) {
                 System.out.println("Такой экземпляр уже есть в хранилище");
             } else {
                 storage[size] = r;
@@ -28,21 +40,19 @@ public class ArrayStorage {
         }
     }
 
-    Resume get(String uuid) {
-        int index = findIndex(uuid);
-        if (index < 0) {
+    public Resume get(String uuid) {
+        if (findIndex(uuid) < 0) {
             System.out.println("Такого объекта не было найдено");
             return null;
         }
-            return storage[index];
-        }
+        return storage[findIndex(uuid)];
+    }
 
-    void delete(String uuid) {
-        int index = findIndex(uuid);
-        if (index < 0) {
-            System.out.println("Ошибка, такого объекта нет");
+    public void delete(String uuid) {
+        if (findIndex(uuid) < 0) {
+            System.out.println("Такого объекта не было найдено");
         } else {
-            storage[index] = storage[size - 1];
+            storage[findIndex(uuid)] = storage[size - 1];
             storage[size - 1] = null;
             size--;
         }
@@ -51,13 +61,14 @@ public class ArrayStorage {
     /**
      * @return array, contains only Resumes in storage (without null)
      */
-    Resume[] getAll() {
+    public Resume[] getAll() {
         return Arrays.copyOf(storage, size);
     }
 
-    int size() {
+    public int size() {
         return size;
     }
+
     private int findIndex(String uuid) {
         for (int i = 0; i < size; i++) {
             if (uuid.equals(storage[i].getUuid())) {
