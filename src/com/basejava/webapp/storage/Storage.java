@@ -9,5 +9,4 @@ public interface Storage {
     void delete(String uuid);
     void update(Resume r);
     Resume[] getAll();
-    int size();
 }

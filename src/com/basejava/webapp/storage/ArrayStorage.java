@@ -7,10 +7,7 @@ import java.util.Arrays;
 /**
  * Array based storage for Resumes
  */
-public class ArrayStorage implements Storage {
-    private static final int STORAGE_LIMIT = 10000;
-    private final Resume[] storage = new Resume[STORAGE_LIMIT];
-    private int size;
+public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
     public void clear() {
@@ -44,15 +41,6 @@ public class ArrayStorage implements Storage {
     }
 
     @Override
-    public Resume get(String uuid) {
-        if (findIndex(uuid) < 0) {
-            System.out.println("Такого объекта не было найдено");
-            return null;
-        }
-        return storage[findIndex(uuid)];
-    }
-
-    @Override
     public void delete(String uuid) {
         if (findIndex(uuid) < 0) {
             System.out.println("Такого объекта не было найдено");
@@ -71,12 +59,7 @@ public class ArrayStorage implements Storage {
         return Arrays.copyOf(storage, size);
     }
 
-    @Override
-    public int size() {
-        return size;
-    }
-
-    private int findIndex(String uuid) {
+     protected int findIndex(String uuid) {
         for (int i = 0; i < size; i++) {
             if (uuid.equals(storage[i].getUuid())) {
                 return i;
